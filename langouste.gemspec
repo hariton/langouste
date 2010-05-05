@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{langouste}
-  s.version = "0.1.0"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Hariton Mizgir"]
@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
-     "bin/translate",
+     "bin/langouste",
      "config/langouste.yaml",
      "langouste.gemspec",
      "lib/langouste.rb",
