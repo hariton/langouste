@@ -9,7 +9,7 @@ Full list of service defined in config:
 
 == Using
 
-gem install langouste
+  gem install langouste
 
 === From console:
 
@@ -27,9 +27,9 @@ More help:
 
 === Inside scripts
 
-require 'langouste'
-t = Langouste.new(:from_lang => :russian, :to_lang => :english, :service => :google)
-puts t.translate("Я список кораблей прочел до середины")
+  require 'langouste'
+  t = Langouste.new(:from_lang => :russian, :to_lang => :english, :service => :google)
+  puts t.translate("Я список кораблей прочел до середины")
 
 == Note on Patches/Pull Requests
  
