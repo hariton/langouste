@@ -1,21 +1,11 @@
-abbreviations:
-  languages:
-    :ru: :russian
-    :r:  :russian
-    :en: :english
-    :e:  :english
-    :ua: :ukrainian
-    :u:  :ukrainian
-    :es: :spanish
-    :de: :german
-    :fr: :french
-    :it: :italian
-  services:
-    :g: :google
-    :m: :meta
-    :b: :babelfish
-    :p: :pereklad
-    :t: :prompt
+pereklad_languages: &pereklad_languages
+  :russian: Rus
+  :english: Eng
+  :spanish: es
+  :ukrainian: Ukr
+  :german: Ger
+  :french: Fre
+  :italian: it
 
 # полный список: af, sq, ar, be, bg, ca, zh-CN, zh-TW, hr, cs, da, nl, en, et, tl, fi, fr, gl, de, el, ht, iw, hi, hu, is, id, ga, it, ja, ko, lv, lt, mk, ms, mt, no, fa, pl, pt, ro, ru, sr, sk, sl, es, sw, sv, th, tr, uk, vi, cy, yi
 google_languages: &google_languages
@@ -25,15 +15,6 @@ google_languages: &google_languages
   :ukrainian: uk
   :german: de
   :french: fr
-  :italian: it
-
-pereklad_languages: &pereklad_languages
-  :russian: Rus
-  :english: Eng
-  :spanish: es
-  :ukrainian: Ukr
-  :german: Ger
-  :french: Fre
   :italian: it
 
 :google:
@@ -184,3 +165,21 @@ pereklad_languages: &pereklad_languages
       text:
         selector: {:name: 'result'}
 
+abbreviations:
+  languages:
+    :ru: :russian
+    :r:  :russian
+    :en: :english
+    :e:  :english
+    :ua: :ukrainian
+    :u:  :ukrainian
+    :es: :spanish
+    :de: :german
+    :fr: :french
+    :it: :italian
+  services:
+    :g: :google
+    :m: :meta
+    :b: :babelfish
+    :p: :pereklad
+    :t: :prompt

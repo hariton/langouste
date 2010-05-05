@@ -1,6 +1,35 @@
-= langouste
+= Langouste
 
-Description goes here.
+Console tool for translation through various online services (google translate, babelfish, pereklad, etc).
+
+With the configuration yaml-file can be configured to work with another service (look at langouste.yaml).
+
+Full list of service defined in config:
+  langouste --list
+
+== Using
+
+gem install langouste
+
+=== From console:
+
+  langouste -f  russian -t english -s google "Я список кораблей прочел до середины"
+  > "I read the list of ships until the middle"
+
+Or shorter:
+  langouste -f ru -t en Я список кораблей прочел до середины
+
+Or even so:
+  langouste -f e -t r Я список кораблей прочел до середины
+
+More help:
+  langouste --help
+
+=== Inside scripts
+
+require 'langouste'
+t = Langouste.new(:from_lang => :russian, :to_lang => :english, :service => :google)
+puts t.translate("Я список кораблей прочел до середины")
 
 == Note on Patches/Pull Requests
  
