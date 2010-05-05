@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+
+require 'langouste'
+
+options = {
+  :from_lang  => :russian,
+  :to_lang    => :english,
+  :service    => :google,
+}
+
+if ARGV.any?
+  require 'optparse'
+  opts = OptionParser.new {|op|
+    op.banner = "Usage: #{File.basename($0)} [options] text"
+
+    op.on('-f language', '--from language', "") {|v| options[:from_lang] = v.to_sym }
+    op.on('-t language', '--to language', "") {|v| options[:to_lang] = v.to_sym }
+    op.on('-l', '--list', 'List of available services') { puts Langouste.list }
+    op.on('-s', '--service services', "") {|v| options[:services] = v.to_sym }
+    op.on('-c path', '--config path', "Path to config yaml-file") {|v| options[:config] = v }
+    op.on('-h', '--help', 'Shows this help message') {puts op; exit}
+
+  }.parse!(ARGV.dup)
+  text = opts.join(' ')
+end
+
+puts Langouste.new(options).translate(text)

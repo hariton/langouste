@@ -5,13 +5,15 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "langouste"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Console tool for translation through various online services (google translate, babelfish, pereklad, etc)}
     gem.email = "hmizgir@gmail.com"
     gem.homepage = "http://github.com/hariton/langouste"
+    gem.executables = %w(translate)
     gem.authors = ["Hariton Mizgir"]
+    gem.add_dependency "mechanize", ">= 1.0.0"
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
+    gem.files.include %w(config/langouste.yaml)
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
