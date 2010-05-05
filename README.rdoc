@@ -1,6 +1,6 @@
 = Langouste
 
-Console tool for translation through various online services (google translate, babelfish, pereklad, etc).
+Gem and console tool for translation through various online services (google translate, babelfish, pereklad, etc).
 
 With the configuration yaml-file can be configured to work with another service (look at langouste.yaml).
 

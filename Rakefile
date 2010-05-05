@@ -5,7 +5,7 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "langouste"
-    gem.summary = %Q{Console tool for translation through various online services (google translate, babelfish, pereklad, etc)}
+    gem.summary = %Q{Gem and console tool for translation through various online services (google translate, babelfish, pereklad, etc)}
     gem.email = "hmizgir@gmail.com"
     gem.homepage = "http://github.com/hariton/langouste"
     gem.executables = %w(translate)
