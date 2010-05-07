@@ -33,7 +33,7 @@ More help:
 
 === Thanks
 
-mjijackson [http://github.com/mjijackson/symboltable] for symboltable
+mjijackson for symboltable[http://github.com/mjijackson/symboltable]
 
 == Note on Patches/Pull Requests
 
