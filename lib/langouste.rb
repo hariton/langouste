@@ -2,117 +2,122 @@
 
 require 'rubygems'
 require 'mechanize'
+require 'symboltable'
 
-class Langouste
-  attr_accessor :from_lang, :to_lang, :service, :config
+# Translation through various online services
+module Langouste
 
-  @@config_path = File.join(File.expand_path(File.dirname(__FILE__)), '../config/langouste.yaml')
+  # Singleton configuration class
+  class Configuration
+    attr_accessor :path, :data
 
-  def self.config
-    @@config ||= YAML.load(File.open(@@config_path))
-  end
-
-  def self.config=(config)
-    @@config = config
-  end
-
-  def initialize(options = {})
-    options = {
-      :from_lang  => :russian,
-      :to_lang    => :english,
-      :service    => :google,
-      :config     => @@config_path
-    }.merge options
-
-    Langouste.config = YAML.load(File.open(options[:config]))
-
-    @from_lang   = deabbreviate_language(options[:from_lang])
-    @to_lang     = deabbreviate_language(options[:to_lang])
-    @service     = deabbreviate_service(options[:service])
-    @config      = Langouste.config[@service]
-  end
-
-  def translate(input_text)
-
-    output_text = ''
-
-    begin
-      input_form = config['input']['form']
-    rescue
-      raise "Bad service: '#{service}'"
+    def initialize(path = nil)
+      @path = path || File.join(File.expand_path(File.dirname(__FILE__)), '../config/langouste.yaml')
+      @data = SymbolTable.new YAML.load_file @path
     end
 
-    # если у переводчика нет нужных языков - запрос не выполняется
-    if input_form['to'] and input_form['from']
-      return '' unless input_form['to']['languages'][to_lang] and input_form['from']['languages'][from_lang]
-    elsif input_form['directions']
-      return '' unless input_form['directions']['directions']["#{from_lang}-#{to_lang}".to_sym]
-    else
-      raise "Bad YAML-config for service: '#{service}'"
+    def self.instance(path = nil)
+        @__instance__ ||= new
     end
 
-    agent = Mechanize.new {|a| a.user_agent_alias = 'Linux Konqueror'}
+    def self.list(config_path = nil)
+      Configuration.instance(config_path).data.services.keys
+    end
 
-    agent.get(config['url']) do |page|
+  end
 
-      translated_page = page.form_with(input_form['selector']) do |form|
+  # Langouste translator
+  class Translator
+    attr_accessor :service, :from_lang, :to_lang
 
-        text = form.field_with(input_form['text']['selector'])
-        text.value = input_text
+    def initialize(options = {})
+      options = {
+        :from_lang  => :russian,
+        :to_lang    => :english,
+        :service    => :google,
+        :path       => nil
+      }.merge options
 
-        if input_form['directions'] and input_form['directions']['field']['selector']
+      config = Configuration.instance(options[:path])
 
-          value = input_form['directions']['directions']["#{from_lang}-#{to_lang}".to_sym]
-          direction = form.field_with(input_form['directions']['field']['selector'])
-          direction.option_with(:value => value).select
+      @service     = deabbreviate_service(options[:service])
+      @from_lang   = deabbreviate_language(options[:from_lang])
+      @to_lang     = deabbreviate_language(options[:to_lang])
+      @direction   = "#{@from_lang}-#{@to_lang}"
+      @config      = config.data.services[@service]
 
-        else
+    end
 
-          if input_form['from'] and input_form['from']['field'] and input_form['from']['field']['selector']
+    def translate(input_text)
 
-            value = input_form['from']['languages'][from_lang]
-            from_lang = form.field_with(input_form['from']['field']['selector'])
-            from_lang.option_with(:value => value).select
+      return '' if not has_languages? or input_text.empty?
 
-          end
+      agent = Mechanize.new {|a| a.user_agent_alias = 'Linux Konqueror'}
 
-          if input_form['to'] and input_form['to']['field'] and input_form['to']['field']['selector']
-
-            value = input_form['to']['languages'][to_lang]
-            to_lang = form.field_with(input_form['to']['field']['selector'])
-            to_lang.option_with(:value => value).select
-
-          end
-
-        end
-
+      input_form = @config.input.form
+      page = agent.get(@config.url)
+      translated_page = page.form_with(input_form.selector) do |form|
+        fill_form form, input_form, input_text
       end.submit
 
-      output_text = if config['output']['xpath']
-        xpath = config['output']['xpath']
-        translated_page.search(xpath)
-      else
-        output_form = config['output']['form']
-        translated_page.form_with(output_form['selector']).field_with(output_form['text']['selector']).value
-      end
+      get_translation translated_page, @config.output
 
     end
 
-    output_text.to_s
-  end
+    private
 
-  def self.list(config_path = nil)
-    Langouste.config.keys.select{|k| k.is_a?(Symbol)}
-  end
+    def deabbreviate_language(language)
+      Configuration.instance.data.abbreviations.languages[language] || language
+    end
 
-  private
+    def deabbreviate_service(service)
+      Configuration.instance.data.abbreviations.services[service] || service
+    end
 
-  def deabbreviate_language(language)
-    Langouste.config['abbreviations']['languages'][language] || language
-  end
+    def has_languages?
+      input_form = @config.input.form
+      if input_form.to and input_form.from
+        return false unless input_form.to.languages[@to_lang] and input_form.from.languages[@from_lang]
+      elsif input_form.directions
+        return false unless input_form.directions.directions[@direction]
+      end
+      return true
+    end
 
-  def deabbreviate_service(services)
-    Langouste.config['abbreviations']['services'][services] || services
+    def fill_form(form, config_form, input_text)
+      to, from, directions, text = config_form.to, config_form.from, config_form.directions, config_form.text
+
+      if directions and directions.field and directions.field.selector
+        set_form_option form.field_with(directions.field.selector), directions.directions[@direction]
+      else
+        if from and from.field and from.field.selector
+          set_form_option form.field_with(from.field.selector), from.languages[@from_lang]
+        end
+        if to and to.field and to.field.selector
+          set_form_option form.field_with(to.field.selector), to.languages[@to_lang]
+        end
+      end
+
+      form_text_field = form.field_with(text.selector)
+      form_text_field.value = input_text
+    end
+
+    def set_form_option(field, value)
+      field.option_with(:value => value).select
+    end
+
+    def get_translation(page, config_output)
+
+      translation = if config_output.xpath
+        page.search(config_output.xpath)
+      else
+        output_form = config_output.form
+        page.form_with(output_form.selector).field_with(output_form.text.selector).value
+      end
+
+      translation ? translation.to_s : ''
+    end
+
   end
 
 end

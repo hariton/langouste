@@ -2,7 +2,7 @@
 
 Gem and console tool for translation through various online services (google translate, babelfish, pereklad, etc).
 
-With the configuration yaml-file can be configured to work with another service (look at langouste.yaml).
+With the configuration yaml-file can be configured to work with another service (look at config/langouste.yaml).
 
 Full list of service defined in config:
   langouste --list
@@ -20,7 +20,7 @@ Or shorter:
   langouste -f ru -t en Я список кораблей прочел до середины
 
 Or even so:
-  langouste -f e -t r Я список кораблей прочел до середины
+  langouste -f r -t e Я список кораблей прочел до середины
 
 More help:
   langouste --help

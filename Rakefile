@@ -8,9 +8,10 @@ begin
     gem.summary = %Q{Gem and console tool for translation through various online services (google translate, babelfish, pereklad, etc)}
     gem.email = "hmizgir@gmail.com"
     gem.homepage = "http://github.com/hariton/langouste"
-    gem.executables = %w(translate)
+    gem.executables = %w(langouste)
     gem.authors = ["Hariton Mizgir"]
     gem.add_dependency "mechanize", ">= 1.0.0"
+    gem.add_dependency "symboltable", ">= 0.2.0"
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
     gem.files.include %w(config/langouste.yaml)
