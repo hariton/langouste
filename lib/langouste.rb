@@ -88,13 +88,13 @@ module Langouste
       to, from, directions, text = config_form.to, config_form.from, config_form.directions, config_form.text
 
       if directions and directions.field and directions.field.selector
-        set_form_option form.field_with(directions.field.selector), directions.directions[@direction]
+        set_field_option form.field_with(directions.field.selector), directions.directions[@direction]
       else
         if from and from.field and from.field.selector
-          set_form_option form.field_with(from.field.selector), from.languages[@from_lang]
+          set_field_option form.field_with(from.field.selector), from.languages[@from_lang]
         end
         if to and to.field and to.field.selector
-          set_form_option form.field_with(to.field.selector), to.languages[@to_lang]
+          set_field_option form.field_with(to.field.selector), to.languages[@to_lang]
         end
       end
 
@@ -102,7 +102,7 @@ module Langouste
       form_text_field.value = input_text
     end
 
-    def set_form_option(field, value)
+    def set_field_option(field, value)
       field.option_with(:value => value).select
     end
 

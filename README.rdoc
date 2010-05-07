@@ -28,11 +28,15 @@ More help:
 === Inside scripts
 
   require 'langouste'
-  t = Langouste.new(:from_lang => :russian, :to_lang => :english, :service => :google)
+  t = Langouste::Translator.new(:from_lang => :russian, :to_lang => :english, :service => :google)
   puts t.translate("Я список кораблей прочел до середины")
 
+=== Thanks
+
+mjijackson [http://github.com/mjijackson/symboltable] for symboltable
+
 == Note on Patches/Pull Requests
- 
+
 * Fork the project.
 * Make your feature addition or bug fix.
 * Add tests for it. This is important so I don't break it in a
