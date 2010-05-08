@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'langouste'
+require 'optparse'
 
 options = {
   :from_lang  => :russian,
@@ -9,20 +10,17 @@ options = {
   :path       => nil
 }
 
-if ARGV.any?
-  require 'optparse'
-  opts = OptionParser.new {|op|
-    op.banner = "Usage: #{File.basename($0)} [options] text"
+opts = OptionParser.new {|op|
+  op.banner = "Usage: #{File.basename($0)} [options] text"
 
-    op.on('-f language', '--from language', 'Source language') {|v| options[:from_lang] = v.to_sym }
-    op.on('-t language', '--to language', 'Destination language') {|v| options[:to_lang] = v.to_sym }
-    op.on('-s', '--service services', 'Service (google translate, babelfish, etc)') {|v| options[:service] = v.to_sym }
-    op.on('-c path', '--config path', 'Path to config file') {|v| options[:path] = v }
-    op.on('-l', '--list', 'List of available services') { puts Langouste::Configuration.list options[:path] }
-    op.on('-h', '--help', 'Shows this help message') {puts op; exit}
+  op.on('-f language', '--from language', 'Source language') {|v| options[:from_lang] = v.to_sym }
+  op.on('-t language', '--to language', 'Destination language') {|v| options[:to_lang] = v.to_sym }
+  op.on('-s', '--service services', 'Service (google translate, babelfish, etc)') {|v| options[:service] = v.to_sym }
+  op.on('-c path', '--config path', 'Path to config file') {|v| options[:path] = v }
+  op.on('-l', '--list', 'List of available services') { puts Langouste::Configuration.list options[:path] }
+  op.on('-h', '--help', 'Shows this help message') {puts op; exit}
 
-  }.parse!(ARGV.dup)
-  text = opts.join(' ')
-end
+}.parse!(ARGV.dup)
+text = opts.join(' ')
 
 puts Langouste::Translator.new(options).translate(text) if text.any?
