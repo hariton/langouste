@@ -1,43 +1,43 @@
-pereklad_languages: &pereklad_languages
-  :russian: Rus
-  :english: Eng
-  :spanish: es
-  :ukrainian: Ukr
-  :german: Ger
-  :french: Fre
-  :italian: it
-
-# полный список: af, sq, ar, be, bg, ca, zh-CN, zh-TW, hr, cs, da, nl, en, et, tl, fi, fr, gl, de, el, ht, iw, hi, hu, is, id, ga, it, ja, ko, lv, lt, mk, ms, mt, no, fa, pl, pt, ro, ru, sr, sk, sl, es, sw, sv, th, tr, uk, vi, cy, yi
 google_languages: &google_languages
-  :russian: ru
-  :english: en
-  :spanish: es
-  :ukrainian: uk
-  :german: de
-  :french: fr
-  :italian: it
+# full list: af, sq, ar, be, bg, ca, zh-CN, zh-TW, hr, cs, da, nl, en, et, tl, fi, fr, gl, de, el, ht, iw, hi, hu, is, id, ga, it, ja, ko, lv, lt, mk, ms, mt, no, fa, pl, pt, ro, ru, sr, sk, sl, es, sw, sv, th, tr, uk, vi, cy, yi
+  russian: ru
+  english: en
+  spanish: es
+  ukrainian: uk
+  german: de
+  french: fr
+  italian: it
+
+pereklad_languages: &pereklad_languages
+  russian: Rus
+  english: Eng
+  spanish: es
+  ukrainian: Ukr
+  german: Ger
+  french: Fre
+  italian: it
 
 abbreviations:
-  languages:
-    :ru: :russian
-    :r:  :russian
-    :en: :english
-    :e:  :english
-    :ua: :ukrainian
-    :u:  :ukrainian
-    :es: :spanish
-    :de: :german
-    :fr: :french
-    :it: :italian
   services:
-    :g: :google
-    :m: :meta
-    :b: :babelfish
-    :p: :pereklad
-    :t: :prompt
+    g: :google
+    m: :meta
+    b: :babelfish
+    p: :pereklad
+    t: :prompt
+  languages:
+    ru: :russian
+    r:  :russian
+    en: :english
+    e:  :english
+    ua: :ukrainian
+    u:  :ukrainian
+    es: :spanish
+    de: :german
+    fr: :french
+    it: :italian
 
 services:
-  :google:
+  google:
     url: 'http://translate.google.com'
     input:
       form:
@@ -60,7 +60,7 @@ services:
         text:
           selector: {:name: 'gtrans'}
 
-  :babelfish:
+  babelfish:
     url: 'http://babelfish.yahoo.com/'
     input:
       form:
@@ -69,44 +69,44 @@ services:
           field:
             selector: {:name: 'lp'}
           directions:
-            :'english-dutch': en_nl
-            :'english-french': en_fr
-            :'english-german': en_de
-            :'english-greek': en_el
-            :'english-italian': en_it
-            :'english-japanese': en_ja
-            :'english-korean': en_ko
-            :'english-portuguese': en_pt
-            :'english-russian': en_ru
-            :'english-spanish': en_es
-            :'dutch-english': nl_en
-            :'dutch-french': nl_fr
-            :'french-dutch': fr_nl
-            :'french-english': fr_en
-            :'french-german': fr_de
-            :'french-greek': fr_el
-            :'french-italian': fr_it
-            :'french-portuguese': fr_pt
-            :'french-spanish': fr_es
-            :'german-english': de_en
-            :'german-french': de_fr
-            :'greek-english': el_en
-            :'greek-french': el_fr
-            :'italian-english': it_en
-            :'italian-french': it_fr
-            :'japanese-english': ja_en
-            :'korean-english': ko_en
-            :'portuguese-english': pt_en
-            :'portuguese-french': pt_fr
-            :'russian-english': ru_en
-            :'spanish-english': es_en
-            :'spanish-french': es_fr
+            'english-dutch': en_nl
+            'english-french': en_fr
+            'english-german': en_de
+            'english-greek': en_el
+            'english-italian': en_it
+            'english-japanese': en_ja
+            'english-korean': en_ko
+            'english-portuguese': en_pt
+            'english-russian': en_ru
+            'english-spanish': en_es
+            'dutch-english': nl_en
+            'dutch-french': nl_fr
+            'french-dutch': fr_nl
+            'french-english': fr_en
+            'french-german': fr_de
+            'french-greek': fr_el
+            'french-italian': fr_it
+            'french-portuguese': fr_pt
+            'french-spanish': fr_es
+            'german-english': de_en
+            'german-french': de_fr
+            'greek-english': el_en
+            'greek-french': el_fr
+            'italian-english': it_en
+            'italian-french': it_fr
+            'japanese-english': ja_en
+            'korean-english': ko_en
+            'portuguese-english': pt_en
+            'portuguese-french': pt_fr
+            'russian-english': ru_en
+            'spanish-english': es_en
+            'spanish-french': es_fr
         text:
           selector: {:name: 'trtext'}
     output:
       xpath: '//div[@id="result"]/div/text()'
 
-  :pereklad:
+  pereklad:
     url: 'http://pereklad.online.ua'
     input:
       form:
@@ -129,7 +129,7 @@ services:
         text:
           selector: {:name: 'DstTxt'}
 
-  :meta:
+  meta:
     url: 'http://translate.meta.ua'
     input:
       form:
@@ -138,26 +138,26 @@ services:
           field:
             selector: {:name: 'language'}
           directions:
-            :'russian-english': Rus-Eng
-            :'english-russian': Eng-Rus
-            :'ukrainian-english': Ukr-Eng
-            :'english-ukrainian': Eng-Ukr
-            :'russian-ukrainian': Rus-Ukr
-            :'ukrainian-russian': Ukr-Rus
-            :'russian-german': Rus-Ger
-            :'german-russian': Ger-Rus
-            :'ukrainian-german': Ukr-Ger
-            :'german-ukrainian': Ger-Ukr
-            :'english-german': Eng-Ger
-            :'german-english': Ger-Eng
-            :'russian-latvian': Rus-Lat
-            :'latvian-russian': Lat-Rus
-            :'ukrainian-latvian': Ukr-Lat
-            :'latvian-ukrainian': Lat-Ukr
-            :'english-latvian': Eng-Lat
-            :'latvian-english': Lat-Eng
-            :'german-latvian': Ger-Lat
-            :'latvian-german': Lat-Ger
+            'russian-english': Rus-Eng
+            'english-russian': Eng-Rus
+            'ukrainian-english': Ukr-Eng
+            'english-ukrainian': Eng-Ukr
+            'russian-ukrainian': Rus-Ukr
+            'ukrainian-russian': Ukr-Rus
+            'russian-german': Rus-Ger
+            'german-russian': Ger-Rus
+            'ukrainian-german': Ukr-Ger
+            'german-ukrainian': Ger-Ukr
+            'english-german': Eng-Ger
+            'german-english': Ger-Eng
+            'russian-latvian': Rus-Lat
+            'latvian-russian': Lat-Rus
+            'ukrainian-latvian': Ukr-Lat
+            'latvian-ukrainian': Lat-Ukr
+            'english-latvian': Eng-Lat
+            'latvian-english': Lat-Eng
+            'german-latvian': Ger-Lat
+            'latvian-german': Lat-Ger
         text:
           selector: {:name: 'SrcTxt'}
     output:
@@ -166,7 +166,7 @@ services:
         text:
           selector: {:name: 'DstTxt'}
 
-  :prompt:
+  prompt:
     url: 'http://online.perevodov.net/Perevodov.net/online-dictionaries/promt.php4'
     input:
       form:
@@ -175,8 +175,8 @@ services:
           field:
             selector: {:name: 'direction'}
           directions:
-            :'russian-english': re
-            :'english-russian': er
+            'russian-english': re
+            'english-russian': er
         text:
           selector: {:name: 'source'}
     output:
