@@ -7,7 +7,7 @@ With the configuration yaml-file can be configured to work with another service 
 Full list of service defined in config:
   langouste --list
 
-== Installation:
+== Installation
 
   sudo gem install langouste
 
