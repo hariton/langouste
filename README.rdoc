@@ -7,9 +7,11 @@ With the configuration yaml-file can be configured to work with another service 
 Full list of service defined in config:
   langouste --list
 
-== Using
+== Installation:
 
-  gem install langouste
+  sudo gem install langouste
+
+== Using
 
 === From console:
 
@@ -25,7 +27,7 @@ Or even so:
 More help:
   langouste --help
 
-=== Inside scripts
+=== Inside scripts:
 
   require 'langouste'
   t = Langouste::Translator.new(:from_lang => :russian, :to_lang => :english, :service => :google)
