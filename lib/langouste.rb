@@ -56,9 +56,10 @@ module Langouste
 
       input_form = @config.input.form
       page = agent.get(@config.url)
-      translated_page = page.form_with(input_form.selector) do |form|
+      filled_form = page.form_with(input_form.selector) do |form|
         fill_form form, input_form, input_text
-      end.submit
+      end
+      translated_page = filled_form.submit
 
       get_translation translated_page, @config.output
 
